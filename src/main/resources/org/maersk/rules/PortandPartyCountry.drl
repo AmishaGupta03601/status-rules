@@ -1,0 +1,40 @@
+package org.maersk.rules;
+unit StatusRequestUnit
+
+import org.maersk.rules.StatusRequest;
+import org.maersk.rules.PortCountry;
+import org.maersk.rules.PartyCountry;
+
+
+rule "DecisionTable2.Rule1"
+    when
+        $statusRequest:/statusRequests[approved == true]
+        $portCountry: PortCountry(alternativeCodeVal == "SD") from $statusRequest.portCountries
+        $partyCountry: PartyCountry(alternativeCodeVal == "SD") from $statusRequest.partyCountries
+    then
+        modify( $statusRequest){ setApproved(false) };
+end
+rule "DecisionTable2.Rule2"
+    when
+        $statusRequest:/statusRequests[approved == true]
+        $portCountry: PortCountry(alternativeCodeVal == "SD(Sudan)") from $statusRequest.portCountries
+        $partyCountry: PartyCountry(alternativeCodeVal == "SD(Sudan)") from $statusRequest.partyCountries
+    then
+        modify( $statusRequest){ setApproved(false) };
+end
+rule "DecisionTable2.Rule3"
+    when
+        $statusRequest:/statusRequests[approved == true]
+        $portCountry: PortCountry(alternativeCodeVal == "SD(Sudan)") from $statusRequest.portCountries
+        $partyCountry: PartyCountry(alternativeCodeVal == "SD(Sudan)") from $statusRequest.partyCountries
+    then
+        modify( $statusRequest){ setApproved(false) };
+end
+rule "DecisionTable2.Rule4"
+    when
+        $statusRequest:/statusRequests[approved == true]
+        $portCountry: PortCountry(alternativeCodeVal == "KP(North Korea)") from $statusRequest.portCountries
+        $partyCountry: PartyCountry(alternativeCodeVal == "KP(North Korea)") from $statusRequest.partyCountries
+    then
+        modify( $statusRequest){ setApproved(false) };
+end

@@ -1,0 +1,40 @@
+package org.maersk.rules;
+unit StatusRequestUnit
+
+import org.maersk.rules.StatusRequest;
+import org.maersk.rules.PortCountry;
+import org.maersk.rules.Currency;
+
+
+rule "DecisionTable1.Rule1"
+    when
+        $statusRequest:/statusRequests[approved == true]
+        $portCountry: PortCountry(alternativeCodeVal == "SD") from $statusRequest.portCountries
+        $currency: Currency(alternativeCodeVal == "CAD") from $statusRequest.currencies
+    then
+        modify( $statusRequest){ setApproved(false) };
+end
+rule "DecisionTable1.Rule2"
+    when
+        $statusRequest:/statusRequests[approved == true]
+        $portCountry: PortCountry(alternativeCodeVal == "SD(Sudan)") from $statusRequest.portCountries
+        $currency: Currency(alternativeCodeVal == "CAD") from $statusRequest.currencies
+    then
+        modify( $statusRequest){ setApproved(false) };
+end
+rule "DecisionTable1.Rule3"
+    when
+        $statusRequest:/statusRequests[approved == true]
+        $portCountry: PortCountry(alternativeCodeVal == "SD(Sudan)") from $statusRequest.portCountries
+        $currency: Currency(alternativeCodeVal == "USD") from $statusRequest.currencies
+    then
+        modify( $statusRequest){ setApproved(false) };
+end
+rule "DecisionTable1.Rule4"
+    when
+        $statusRequest:/statusRequests[approved == true]
+        $portCountry: PortCountry(alternativeCodeVal == "KP(North Korea)") from $statusRequest.portCountries
+        $currency: Currency(alternativeCodeVal == "USD") from $statusRequest.currencies
+    then
+        modify( $statusRequest){ setApproved(false) };
+end

@@ -1,0 +1,8 @@
+package org.maersk.rules;
+unit StatusRequestUnit
+
+import org.maersk.rules.StatusRequest;
+
+query FindNotApproved
+    $statusRequest: /statusRequests[ approved ]
+end
